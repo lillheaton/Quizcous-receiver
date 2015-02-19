@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html>
 <head>
   <title>Page Title</title>
+
+  <link rel="stylesheet" href="styles/styles.css">
+
+  <!-- Cast API -->
+  <script src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
 </head>
 
 <body>
-	<h1>Quizcous</h1>
-</body>
+	<h1>Quizcous <span>The flavour you like ;)</span></h1>
 
+  <!-- Load in require library which will then call js/main.js -->
+  <script src="bower_components/requirejs/require.js" data-main="js/main"></script>
+</body>
 </html>

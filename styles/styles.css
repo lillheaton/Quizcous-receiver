@@ -1,0 +1,105 @@
+/*
+  navy : #001f3f
+  blue : #0074d9
+  aqua : #7fdbff
+  teal : #39cccc
+  olive : #3d9970
+  green : #2ecc40
+  lime : #01ff70
+  yellow : #ffdc00
+  orange : #ff851b
+  red : #ff4136
+  maroon : #85144b
+  fuchsia : #f012be
+  purple : #b10dc9
+  black : #111111
+  gray : #aaaaaa
+  silver : #dddddd
+  white : #ffffff
+*/
+
+
+
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  background-color: #001f3f;
+  color: hsla(210, 100%, 75%, 1.0);
+  font-family: avenir,'avenir next',helvetica,arial,sans-serif;
+}
+
+
+
+h1 {
+  position: relative;
+  top: 50%;
+  margin-top: -75px;
+  font-size: 75px;
+  text-align: center;
+}
+
+h1 span {
+  display: block;
+  font-size: 10px;
+}
+
+h1 span:hover {
+  color: #0074D9;
+  transition: color 0.3s;
+}
+
+
+
+/**
+ * Log
+ */
+.log {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 550px;
+  height: 300px;
+  background-color: rgba(30, 30, 30, 0.7);
+  color: #fff;
+  font-family: monospace;
+  overflow: auto;
+}
+
+.log.collapsed {
+  width: 10px;
+  height: 10px;
+  overflow: hidden;
+}
+
+.log .toggle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  background-color: #3d9970;
+  cursor: pointer;
+}
+
+.log ul {
+  list-style: none;
+  padding-left: 5px;
+}
+
+.log .type {
+  display: inline-block;
+  min-width: 40px;
+}
+
+.log .type-error .type {
+  color: #ff4136;
+}
+.log .type-debug .type {
+  color: #0074d9;
+}
+.log .type-log .type {
+  color: #dddddd
+}
