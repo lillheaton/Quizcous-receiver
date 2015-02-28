@@ -50,7 +50,7 @@ define([
       return Array.prototype.slice.call(args, 0);
     },
     _argsToStr: function(args) {
-      return this._argsToArr(args).join(', ');
+      return this._argsToArr(args).join(' ');
     },
     _createOutputElement: function() {
       return $('<li><span class="type"></span>: <span class="message"></span></li>');

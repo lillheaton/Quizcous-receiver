@@ -1,11 +1,15 @@
 define([
   'underscore',
   'events',
-  'classy'
+  'classy',
+
+  'util/log'
 ], function(
   _,
   Events,
-  Classy
+  Classy,
+
+  Log
 ) {
 
   var App = Classy.extend({
@@ -22,6 +26,7 @@ define([
 
       this.setupSessionHandling();
 
+      Log.debug('screen: ', window.innerWidth, window.innerHeight);
     },
 
     // Initialize all session events for Cast session
