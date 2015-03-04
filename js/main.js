@@ -20,7 +20,7 @@ require.config({
 // Entry point into app via requirejs
 require(['util/log', 'app'], function(Log, App) {
   window.Log = Log;
-  new App()/*.start()*/;
+  new App();
 
   Log.log('LOL*');
 
