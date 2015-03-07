@@ -15,25 +15,28 @@ define([
 ) {
 
 
-  var Receiver = Classy.extend({
+  var User = Classy.extend({
 
     id: null,
     userAgent: null,
 
-    name: 'noname',
-    color: Colors.random(),
+    // Easily parsed data to be sent
+    data: {
+      name: 'noname',
+      color: Colors.random()
+    },
 
+    
     // @constructor
-    __init__: function(id, userAgent) {
+    __init__: function User(id, userAgent) {
       this.id = id;
       this.userAgent = userAgent;
     }
 
-
   });
 
-  // add event interface to Receiver
-  _.extend(Receiver, Events);
+  // add event interface to User
+  _.extend(User.prototype, Events);
 
-  return Receiver;
+  return User;
 });

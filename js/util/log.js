@@ -91,8 +91,8 @@ define([
 
 
     // Window event listeners
-    _onWindowError: function() {
-      this.error.apply(this, arguments);
+    _onWindowError: function(errorEvent) {
+      this.error(errorEvent.message, '; filename:', errorEvent.filename, '; lineno:', errorEvent.lineno);
     }
 
   });

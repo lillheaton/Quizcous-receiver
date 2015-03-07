@@ -40,7 +40,7 @@ define([
       // https://developers.google.com/cast/docs/reference/receiver/cast.receiver.CastReceiverManager
       this.castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
       // https://developers.google.com/cast/docs/reference/receiver/cast.receiver.CastMessageBus
-      this.messageBus = this.castReceiverManager.getMessageBus(this.NAMESPACE, this.MESSAGE_TYPE);
+      // this.messageBus = this.castReceiverManager.getMessageBus(this.NAMESPACE, this.MESSAGE_TYPE);
 
       this.initEvents();
 
@@ -60,9 +60,9 @@ define([
       crManager.onSystemVolumeChanged = this.onSystemVolumeChanged.bind(this);
       crManager.onVisibilityChanged = this.onVisibilityChanged.bind(this);
 
-      var mBus = this.messageBus;
+      // var mBus = this.messageBus;
 
-      mBus.onMessage = this.onMessageBusMessage.bind(this);
+      // mBus.onMessage = this.onMessageBusMessage.bind(this);
     },
 
 
@@ -179,7 +179,7 @@ define([
   });
 
   // add event interface to Receiver
-  _.extend(Receiver, Events);
+  _.extend(Receiver.prototype, Events);
 
   return Receiver;
 });
