@@ -23,10 +23,6 @@ define([
       this.receiver = new Receiver();
 
       this.init();
-
-      // this.receiver.start();''
-      
-      Log.debug('screen: ', window.innerWidth, window.innerHeight);
     },
 
     init: function() {
@@ -38,6 +34,6 @@ define([
 
 
   // add event interface to App
-  _.extend(App, Events);
+  _.extend(App.prototype, Events);
   return App;
 });

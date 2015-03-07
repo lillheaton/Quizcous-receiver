@@ -39,6 +39,7 @@ define([
     init: function() {
       // https://developers.google.com/cast/docs/reference/receiver/cast.receiver.CastReceiverManager
       this.castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
+
       // https://developers.google.com/cast/docs/reference/receiver/cast.receiver.CastMessageBus
       // this.messageBus = this.castReceiverManager.getMessageBus(this.NAMESPACE, this.MESSAGE_TYPE);
 
