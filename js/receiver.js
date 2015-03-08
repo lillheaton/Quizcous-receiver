@@ -89,11 +89,14 @@ define([
       // 100 minutes for testing, use default 10sec in prod by not setting this value
       appConfig.maxInactivity = 6000;
 
+      appConfig.statusText = "Quizcous Receiver is starting";
+
       /**
        * Initializes the system manager. The application should call this method when
        * it is ready to start receiving messages, typically after registering
        * to listen for the events it is interested on.
        */
+      Log.debug('Starting Cast Receiver Manager with setings', JSON.stringify(appConfig));
       this.castReceiverManager.start(appConfig);
 
       return this;
@@ -122,11 +125,15 @@ define([
     // Session event handlers //
     ////////////////////////////
     onSenderConnected: function(event) {
+      Log.debug("User connected", event.senderId, event.userAgent);
+
       var user = new User(event.senderId, event.userAgent);
 
       this.trigger('user.connected', user);
     },
     onSenderDisconnected: function(event) {
+      Log.debug("User disconnected", event.senderId, event.userAgent);
+
       var reason = event.reason;
       var user = this.getUserById(event.senderId);
 
@@ -145,8 +152,13 @@ define([
     },
     onReady: function(event) {
       this.trigger('ready', event);
+
+      Log.debug("CastReceiverManager is ready", JSON.stringify(event.data));
+      this.castReceiverManager.setApplicationState("Quizcous receiver is ready...");
     },
     onShutdown: function(event) {
+      Log.debug('CastReceiverManager shutdown');
+
       this.trigger('shutdown', event);
     },
     onStandbyChanged: function(event) {

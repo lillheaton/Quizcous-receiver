@@ -23,6 +23,8 @@ define([
       this.receiver = new Receiver();
 
       this.init();
+
+      this.receiver.start();
     },
 
     init: function() {
