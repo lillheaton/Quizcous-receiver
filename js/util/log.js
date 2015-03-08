@@ -14,10 +14,19 @@ define([
 
   var Log = Classy.extend({
 
+      logLevels: {
+        ALL: 0,
+        DEBUG: 1,
+        LOG: 2,
+        ERROR: 3
+      },
+
     __init__: function() {
       this.init();
 
-      this.log('log created');
+      this.logLevel = this.logLevels.ALL;
+
+      this.debug('log created');
     },
 
     init: function() {
@@ -40,7 +49,21 @@ define([
     },
 
 
-    setupAppEvents: function(app) {
+    setLogLevel: function(logLevel) {
+      this.logLevel = logLevel;
+      this.filterLogLevelOutput();
+    },
+
+    filterLogLevelOutput: function() {
+      var logLevel = this.logLevel;
+      this.$container.find('li').each(function(index, elem) {
+        var $elem = $(elem);
+        if ($elem.attr('data-log-level') >= logLevel) {
+          $elem.show();
+        } else {
+          $elem.hide();
+        }
+      });
     },
 
 
@@ -58,8 +81,11 @@ define([
 
 
     // Output logs to our DOM-element
-    _output: function(type, output, css) {
+    _output: function(logLevel, type, output, css) {
+
       var $elem = this._createOutputElement();
+
+      $elem.attr('data-log-level', logLevel);
 
       $elem.find('.type').text(type);
       $elem.find('.message').text(output);
@@ -72,19 +98,23 @@ define([
 
       this.$container.append($elem);
       this.$log[0].scrollTop = this.$log[0].scrollHeight;
+
+      if (logLevel < this.logLevel) {
+        $elem.hide();
+      }
     },
 
 
 
     // Public logging functions
     error: function() {
-      this._output('error', this._argsToStr(arguments));
+      this._output(this.logLevels.ERROR, 'error', this._argsToStr(arguments));
     },
     log: function() {
-      this._output('log', this._argsToStr(arguments));
+      this._output(this.logLevels.LOG, 'log', this._argsToStr(arguments));
     },
     debug: function() {
-      this._output('debug', this._argsToStr(arguments));
+      this._output(this.logLevels.DEBUG, 'debug', this._argsToStr(arguments));
     },
 
 

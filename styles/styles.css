@@ -20,7 +20,7 @@
 
 
 
-html, body {
+html, body, #app {
   margin: 0;
   height: 100%;
   overflow: hidden;
@@ -31,7 +31,6 @@ body {
   color: hsla(210, 100%, 75%, 1.0);
   font-family: avenir,'avenir next',helvetica,arial,sans-serif;
 }
-
 
 
 h1 {
@@ -109,5 +108,5 @@ h1 span:hover {
   color: #0074d9;
 }
 .log .type-log .type {
-  color: #dddddd
+  color: #01FF70;
 }

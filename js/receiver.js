@@ -22,7 +22,7 @@ define([
 
     // Constants
     NAMESPACE: 'urn:x-cast:com.emilochhektor.quizcous',
-    MESSAGE_TYPE: cast.receiver.CastMessageBus.JSON,
+    MESSAGE_TYPE: cast.receiver.CastMessageBus.MessageType.JSON,
 
     // Members
     castReceiverManager: null,
@@ -41,7 +41,7 @@ define([
       this.castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
 
       // https://developers.google.com/cast/docs/reference/receiver/cast.receiver.CastMessageBus
-      // this.messageBus = this.castReceiverManager.getMessageBus(this.NAMESPACE, this.MESSAGE_TYPE);
+      this.messageBus = this.castReceiverManager.getCastMessageBus(this.NAMESPACE, this.MESSAGE_TYPE);
 
       this.initEvents();
 
@@ -51,19 +51,17 @@ define([
 
     // Initialize all session events for Cast session
     initEvents: function() {
-      var crManager = this.castReceiverManager;
+      // Cast receiver manager
+      this.castReceiverManager.onSenderConnected = this.onSenderConnected.bind(this);
+      this.castReceiverManager.onSenderDisconnected = this.onSenderDisconnected.bind(this);
+      this.castReceiverManager.onReady = this.onReady.bind(this);
+      this.castReceiverManager.onShutdown = this.onShutdown.bind(this);
+      this.castReceiverManager.onStandbyChanged = this.onStandbyChanged.bind(this);
+      this.castReceiverManager.onSystemVolumeChanged = this.onSystemVolumeChanged.bind(this);
+      this.castReceiverManager.onVisibilityChanged = this.onVisibilityChanged.bind(this);
 
-      crManager.onSenderConnected = this.onSenderConnected.bind(this);
-      crManager.onSenderDisconnected = this.onSenderDisconnected.bind(this);
-      crManager.onReady = this.onReady.bind(this);
-      crManager.onShutdown = this.onShutdown.bind(this);
-      crManager.onStandbyChanged = this.onStandbyChanged.bind(this);
-      crManager.onSystemVolumeChanged = this.onSystemVolumeChanged.bind(this);
-      crManager.onVisibilityChanged = this.onVisibilityChanged.bind(this);
-
-      // var mBus = this.messageBus;
-
-      // mBus.onMessage = this.onMessageBusMessage.bind(this);
+      // Message bus
+      this.messageBus.onMessage = this.onMessageBusMessage.bind(this);
     },
 
 
@@ -125,15 +123,11 @@ define([
     // Session event handlers //
     ////////////////////////////
     onSenderConnected: function(event) {
-      Log.debug("User connected", event.senderId, event.userAgent);
-
       var user = new User(event.senderId, event.userAgent);
 
       this.trigger('user.connected', user);
     },
     onSenderDisconnected: function(event) {
-      Log.debug("User disconnected", event.senderId, event.userAgent);
-
       var reason = event.reason;
       var user = this.getUserById(event.senderId);
 
@@ -153,7 +147,7 @@ define([
     onReady: function(event) {
       this.trigger('ready', event);
 
-      Log.debug("CastReceiverManager is ready", JSON.stringify(event.data));
+      Log.debug("Quizcous receiver is ready...");
       this.castReceiverManager.setApplicationState("Quizcous receiver is ready...");
     },
     onShutdown: function(event) {
@@ -165,8 +159,7 @@ define([
       this.trigger('standbychanged', event);
     },
     onSystemVolumeChanged: function(event) {
-      // typeof event.data
-      // https://developers.google.com/cast/docs/reference/receiver/cast.receiver.media.Volume
+      // typeof event.data: https://developers.google.com/cast/docs/reference/receiver/cast.receiver.media.Volume
       this.trigger('systemvolumechanged', event);
     },
     onVisibilityChanged: function(event) {
@@ -177,8 +170,7 @@ define([
 
 
     onMessageBusMessage: function(event) {
-      // typeof event
-      // https://developers.google.com/cast/docs/reference/receiver/cast.receiver.CastMessageBus.Event
+      // typeof event: https://developers.google.com/cast/docs/reference/receiver/cast.receiver.CastMessageBus.Event
 
       var user = this.getUserById(event.senderId);
 

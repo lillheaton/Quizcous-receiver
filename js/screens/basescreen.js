@@ -17,15 +17,26 @@ define([
   var BaseScreen = Classy.extend({
 
     // @constructor
-    __init__: function() {
+    __init__: function(app) {
+      this.$el = $('<div>');
+      this.app = app;
+
       this.active = false;
     },
 
-    show: function() { this.active = true;  },
-    hide: function() { this.active = false; },
+    show: function() {
+      this.active = true;
+      this.$el.show();
+    },
+    hide: function() {
+      this.active = false;
+      this.$el.hide();
+    },
 
     update: function(time) { },
-    draw: function() { }
+    draw: function($container) {
+      $container.html(this.$el);
+    }
 
   });
 
