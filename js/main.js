@@ -19,7 +19,7 @@ require.config({
 
 // Entry point into app via requirejs
 require(['util/log', 'app'], function(Log, App) {
-  Log.setLogLevel(Log.logLevels.LOG);
+  Log.setLogLevel(Log.levels.ALL);
 
   window.Log = Log;
 

@@ -14,7 +14,7 @@ define([
 
   var Log = Classy.extend({
 
-      logLevels: {
+      levels: {
         ALL: 0,
         DEBUG: 1,
         LOG: 2,
@@ -24,7 +24,7 @@ define([
     __init__: function() {
       this.init();
 
-      this.logLevel = this.logLevels.ALL;
+      this.logLevel = this.levels.ALL;
 
       this.debug('log created');
     },
@@ -108,13 +108,13 @@ define([
 
     // Public logging functions
     error: function() {
-      this._output(this.logLevels.ERROR, 'error', this._argsToStr(arguments));
+      this._output(this.levels.ERROR, 'error', this._argsToStr(arguments));
     },
     log: function() {
-      this._output(this.logLevels.LOG, 'log', this._argsToStr(arguments));
+      this._output(this.levels.LOG, 'log', this._argsToStr(arguments));
     },
     debug: function() {
-      this._output(this.logLevels.DEBUG, 'debug', this._argsToStr(arguments));
+      this._output(this.levels.DEBUG, 'debug', this._argsToStr(arguments));
     },
 
 

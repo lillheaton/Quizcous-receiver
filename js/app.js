@@ -49,7 +49,7 @@ define([
     initReceiver: function() {
       this.receiver = new Receiver();
       this.receiver.on('user.connected', function(user) {
-        Log.debug('User connected');
+        Log.log('User connected');
 
         this.receiver.send(user.id, "Hello Sender");
       }, this);
