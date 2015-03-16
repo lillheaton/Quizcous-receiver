@@ -48,12 +48,9 @@ define([
 
     initReceiver: function() {
       this.receiver = new Receiver();
-      this.receiver.on('user.connected', function(user) {
-        Log.log('User connected');
-
-        this.receiver.send(user.id, "Hello Sender");
-      }, this);
+      this.receiver.on('user.connected', function(user) { Log.log('User connected'); this.receiver.send(user.id, "Hello Sender"); }, this);
       this.receiver.on('user.disconnected', function() { Log.debug('User disconnected'); });
+      this.receiver.on('user.message', function(message) { Log.log('User message', JSON.stringify(message)); });
     },
 
 

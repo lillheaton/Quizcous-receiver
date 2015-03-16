@@ -24,7 +24,7 @@ define([
     },
 
     draw: function($container) {
-      this.$el = $('<h1>Quizcous <span>Serving from a local server close to you</span></h1>');
+      this.$el = $('<h1 class="big-title pulse">Quizcous <span>Serving from a local server close to you</span></h1>');
 
       this.supr($container);
     }

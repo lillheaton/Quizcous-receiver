@@ -110,6 +110,18 @@ define([
       this.messageBus.broadcast(message);
     },
 
+    
+    addUser: function(id, userAgent) {
+      var user = this.getUserById(id);
+
+      if (!user) {
+        user = new User(id, userAgent);
+        this.users.push(user);
+      }
+
+      return user;
+    },
+
 
     getUserById: function(id) {
       return _.find(this.users, function(user) {
@@ -123,8 +135,7 @@ define([
     // Session event handlers //
     ////////////////////////////
     onSenderConnected: function(event) {
-      var user = new User(event.senderId, event.userAgent);
-
+      var user = this.addUser(event.senderId, event.userAgent);
       this.trigger('user.connected', user);
     },
     onSenderDisconnected: function(event) {

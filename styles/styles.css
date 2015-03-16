@@ -29,33 +29,37 @@ html, body, #app {
 body {
   background-color: #001f3f;
   color: hsla(210, 100%, 75%, 1.0);
-  font-family: avenir,'avenir next',helvetica,arial,sans-serif;
+  /*font-family: avenir,'avenir next',helvetica,arial,sans-serif;*/
+  font-family: 'Roboto', sans-serif;
 }
 
 
-h1 {
+.big-title {
   position: relative;
   top: 50%;
-  margin-top: -75px;
-  font-size: 75px;
+  margin-top: -95px;
+  font-size: 95px;
+  font-weight: normal;
   text-align: center;
-  -webkit-animation: pulse 2s infinite;
 }
 
-h1 span {
+.big-title span {
   display: block;
   font-size: 10px;
 }
 
-h1 span:hover {
+.big-title span:hover {
   color: #0074D9;
   transition: color 0.3s;
 }
 
+.pulse {
+  -webkit-animation: pulse 5s infinite;  
+}
 
 @-webkit-keyframes pulse {
   0% { -webkit-transform: scale(1.0); }
-  50% { -webkit-transform: scale(1.2); }
+  50% { -webkit-transform: scale(1.1); }
   100% { -webkit-transform: scale(1.0); }
 }
 
