@@ -38,7 +38,7 @@ define([
       var $log = this.$log = $('<div class="log"><div class="toggle"></div></div>');
       this.$container = $('<ul>');
 
-      $log.find('.toggle').click(function() { $log.toggleClass('collapsed'); });
+      $log.find('.toggle').click(this.toggle.bind(this));
 
       $log.append(this.$container);
       $('body').append($log);
@@ -47,6 +47,8 @@ define([
     setupWindowEvents: function() {
       window.addEventListener('error', _.bind(this._onWindowError, this), false);
     },
+
+    toggle: function() { this.$log.toggleClass('collapsed'); },
 
 
     setLogLevel: function(logLevel) {

@@ -99,17 +99,6 @@ define([
 
       return this;
     },
-
-
-
-    // @Public
-    send: function(user, message) {
-      this.messageBus.send(user.id, message);
-    },
-    broadcast: function(message) {
-      this.messageBus.broadcast(message);
-    },
-
     
     addUser: function(id, userAgent) {
       var user = this.getUserById(id);
@@ -127,6 +116,17 @@ define([
       return _.find(this.users, function(user) {
         return user.id === id;
       }) || null;
+    },
+
+
+
+
+    // @Public
+    send: function(user, message) {
+      this.messageBus.send(user.id, message);
+    },
+    broadcast: function(message) {
+      this.messageBus.broadcast(message);
     },
 
 
