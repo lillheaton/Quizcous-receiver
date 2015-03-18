@@ -128,6 +128,9 @@ define([
     broadcast: function(message) {
       this.messageBus.broadcast(message);
     },
+    setState: function(state) {
+      this.castReceiverManager.setApplicationState(state);
+    },
 
 
 
@@ -159,7 +162,6 @@ define([
       this.trigger('ready', event);
 
       Log.debug("Quizcous receiver is ready...");
-      this.castReceiverManager.setApplicationState("Quizcous receiver is ready...");
     },
     onShutdown: function(event) {
       Log.debug('CastReceiverManager shutdown');
