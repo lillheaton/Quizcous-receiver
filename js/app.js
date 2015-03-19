@@ -7,7 +7,8 @@ define([
 
   'receiver',
 
-  'screens/loadingscreen'
+  'screens/loadingscreen',
+  'screens/lobbyscreen'
 ], function(
   _,
   Events,
@@ -17,7 +18,8 @@ define([
 
   Receiver,
 
-  LoadingScreen
+  LoadingScreen,
+  LobbyScreen
 ) {
 
   var App = Classy.extend({
@@ -29,7 +31,7 @@ define([
     __init__: function() {
       this.init();
 
-      this.setScreen(this.screens.loading);
+      this.setScreen(this.screens.lobby);
 
       this.receiver.start();
     },
@@ -38,18 +40,19 @@ define([
 
       this.$el = $('#app');
 
-      this.initScreens();
       this.initReceiver();
+      this.initScreens();
     },
 
     initScreens: function() {
+      this.screens.lobby = new LobbyScreen(this);
       this.screens.loading = new LoadingScreen(this);
     },
 
     initReceiver: function() {
       this.receiver = new Receiver();
       this.receiver.on('ready', function() { this.receiver.setState('Quizcous lobby'); }, this);
-      this.receiver.on('user.connected', function(user) { Log.log('User connected'); this.receiver.send(user, { message: "Hello Sender" }); }, this);
+      // this.receiver.on('user.connected', function(user) { Log.log('User connected'); this.receiver.send(user, { message: "Hello Sender" }); }, this);
       this.receiver.on('user.disconnected', function() { Log.debug('User disconnected'); });
       this.receiver.on('user.message', function(data) { Log.log('User message', JSON.stringify(data.message)); });
     },
