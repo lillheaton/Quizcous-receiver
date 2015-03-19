@@ -19,16 +19,18 @@ define([
 ) {
 
   var containerTemplate = _.template((function() {/*
-      <section class="upper">
-        <h1 class="big-title pulse">Quizcous <span>Serving from a local server close to you</span></h1>
-      </section>
-      <section class="lower">
-      </section>
+      <div class="lobby-container">
+        <section class="upper">
+          <h1 class="big-title pulse">Quizcous <span>Serving from a local server close to you</span></h1>
+        </section>
+
+        <section class="lower"></section>
+      </div>
   */}.toString().split('\n').slice(1, -1).join('\n')));
  
   var userTemplate = _.template((function() {/*
     <% _.each(users, function(user) { %>
-      <div class="user">
+      <div class="user" data-id="<%= user.id %>">
         <div class="color" style="background: <%= user.data.color %>;"></div>
         <div class="name"><%= user.data.name %></div>
       </div>
@@ -53,28 +55,29 @@ define([
     },
 
     draw: function($container) {
-      if (!this.$el) this.$el = $('<div>').addClass('lobby-container');
+      this.$el = $(containerTemplate({}));
 
-      this.$el.html(containerTemplate({}));
-      this.$el.find('section.lower').html(userTemplate({
-        users: this.app.receiver.users
-      }));
+      _.each(this.app.receiver.users, function(user) { this.drawUser(user); }, this);
 
-
-      if ($container) {
-        this.supr($container);
-      }
+      this.supr($container);
     },
 
+    drawUser: function(user) {
+      this.$el.find('section.lower').append(userTemplate({
+        users: [user]
+      }));
+    },
 
 
     // Event handlers
-    userConnected: function() {
+    userConnected: function(user) {
       $('#app').addClass('lobby');
-      this.draw();
+      this.drawUser(user);
     },
-    userDisconnected: function() {
-      if (!this.app.receiver.users.length) $('#app').removeClass('lobby');
+    userDisconnected: function(user) {
+      this.$el.find('[data-id="' + user.id + '"]').remove();
+
+      if (this.$el.find('.user').length === 0) $('#app').removeClass('lobby');
     }
 
   });

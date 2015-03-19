@@ -20,17 +20,17 @@ define([
     id: null,
     userAgent: null,
 
-    // Easily parsed data to be sent
-    data: {
-      name: 'noname',
-      color: Colors.random()
-    },
 
     
     // @constructor
     __init__: function User(id, userAgent) {
       this.id = id;
       this.userAgent = userAgent;
+
+      this.data = {
+        name: 'ABC',
+        color: Colors.random()
+      };
     }
 
   });

@@ -155,28 +155,25 @@ body {
   top: 30%;
 }
 
-/* <div class="user">
-  <div class="color orange"></div>
-  <div class="name">HEK</div>
-</div> */
-
  .user {
   width: 100px;
   text-align: center;
   position: absolute;
   margin-left: -50px;
+  top: 60%;
+  -webkit-animation: user-appear 1.0s;
+  transition: all 1.0s;
 }
 .user .color {
   width: 100px;
   height: 100px;
   border-radius: 50%;
+  box-shadow: 0px 2px 5px rgb(115, 115, 115);
+  transition: background-color 1.0s;
 }
-.user .color.orange {
-  background: #FF9800;
-} 
 .user .name {
   text-transform: uppercase;
-  margin-top: 15px;
+  margin: 15px 0 0 5px;
   font-size: 26px;
   letter-spacing: 5px
 }
@@ -184,3 +181,8 @@ body {
 .user:nth-of-type(1) { left: 50%; }
 .user:nth-of-type(2) { left: 30%; }
 .user:nth-of-type(3) { left: 70%; } 
+
+@-webkit-keyframes user-appear {
+  from { -webkit-transform: scale(0.0); }
+  to { -webkit-transform: scale(1.0); }
+}
