@@ -20,6 +20,7 @@ define([
     __init__: function(app) {
       this.$el = $('<div>');
       this.app = app;
+      this.name = 'unnamed';
 
       this.active = false;
     },
