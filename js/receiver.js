@@ -106,9 +106,19 @@ define([
       if (!user) {
         user = new User(id, userAgent);
         this.users.push(user);
+        this.trigger('user.added', user);
       }
 
       return user;
+    },
+
+    removeUser: function(user /* or id */) {
+      if (typeof user === 'string') user = this.getUserById(user);
+
+      if (user) {
+        this.users.splice(this.users.indexOf(user), 1);
+        this.trigger('user.removed', user);
+      }
     },
 
 
@@ -145,10 +155,8 @@ define([
       var reason = event.reason;
       var user = this.getUserById(event.senderId);
 
-      if (user) {
-        this.trigger('user.disconnected', user);
-        this.users.splice(this.users.indexOf(user), 1);
-      }
+      this.trigger('user.disconnected', user);
+      this.removeUser(user);
 
       // Check if last user requested shutdown
       if (this.castReceiverManager.getSenders().length === 0 &&

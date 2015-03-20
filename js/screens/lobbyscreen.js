@@ -50,8 +50,8 @@ define([
     initEvents: function() {
       var receiver = this.app.receiver;
 
-      receiver.on('user.connected', this.userConnected, this);
-      receiver.on('user.disconnected', this.userDisconnected, this);
+      receiver.on('user.added', this.userAdded, this);
+      receiver.on('user.removed', this.userRemoved, this);
     },
 
     draw: function($container) {
@@ -70,11 +70,11 @@ define([
 
 
     // Event handlers
-    userConnected: function(user) {
+    userAdded: function(user) {
       $('#app').addClass('lobby');
       this.drawUser(user);
     },
-    userDisconnected: function(user) {
+    userRemoved: function(user) {
       this.$el.find('[data-id="' + user.id + '"]').remove();
 
       if (this.$el.find('.user').length === 0) $('#app').removeClass('lobby');
