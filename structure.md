@@ -1,4 +1,17 @@
 
+# In lobby
+
+
+
+
+
+
+
+
+
+
+
+
 # Quizcous Receiver app
 
 ## Main

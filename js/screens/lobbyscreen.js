@@ -30,8 +30,10 @@ define([
  
   var userTemplate = _.template((function() {/*
     <% _.each(users, function(user) { %>
-      <div class="user" data-id="<%= user.id %>">
-        <div class="color" style="background: <%= user.data.color %>;"></div>
+      <div class="user <% if (user.lobbyReady) { %>ready<% } %>" data-id="<%= user.id %>">
+        <div class="color" style="background: <%= user.data.color %>;">
+          <div class="checkmark"></div>
+        </div>
         <div class="name"><%= user.data.name %></div>
       </div>
     <% }); %>
@@ -50,7 +52,7 @@ define([
     initEvents: function() {
       var receiver = this.app.receiver;
 
-      receiver.on('user.added', this.userAdded, this);
+      receiver.on('user.added', this.onUserAdded, this);
       receiver.on('user.removed', this.userRemoved, this);
     },
 
@@ -63,21 +65,54 @@ define([
     },
 
     drawUser: function(user) {
-      this.$el.find('section.lower').append(userTemplate({
-        users: [user]
-      }));
+      if (!user.data.name || !user.data.color) return;
+
+      var $user = this.$el.find('[data-id="' + user.id + '"]');
+
+      if ($user.length === 0) {
+        $user = $(userTemplate({ users: [user] }));
+        this.$el.find('section.lower').append($user);
+      }
+
+      $user.find('.color').css('background', user.data.color);
+      $user.find('.name').text(user.data.name);
+      $user.toggleClass('ready', !!user.data.lobbyReady);
+
+      if (this.$el.find('.user').length > 0) $('#app').addClass('lobby');
     },
+
+
+    addUserToLobby: function(user) {
+      user.on('user.change', this.onUserChange, this);
+      user.on('lobby.ready', this.onUserReady, this);
+
+      this.drawUser(user);
+    },
+
+    readyCheck: function() {
+      var allReady = _.all(this.app.receiver.users, function(user) { return !!user.data.lobbyReady; });
+
+      if (allReady) { Log.log('All users ready'); }
+    },
+
+
 
 
     // Event handlers
-    userAdded: function(user) {
-      $('#app').addClass('lobby');
-      this.drawUser(user);
+    onUserAdded: function(user) {
+      this.addUserToLobby(user);
     },
+
     userRemoved: function(user) {
       this.$el.find('[data-id="' + user.id + '"]').remove();
 
       if (this.$el.find('.user').length === 0) $('#app').removeClass('lobby');
+    },
+
+    onUserChange: function(user) {
+      this.drawUser(user);
+
+      this.readyCheck();
     }
 
   });

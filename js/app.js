@@ -54,7 +54,7 @@ define([
       this.receiver.on('ready', function() { this.receiver.setState('Quizcous lobby'); }, this);
       // this.receiver.on('user.connected', function(user) { Log.log('User connected'); this.receiver.send(user, { message: "Hello Sender" }); }, this);
       this.receiver.on('user.disconnected', function() { Log.debug('User disconnected'); });
-      this.receiver.on('user.message', function(data) { Log.log('User message', JSON.stringify(data.message)); });
+      this.receiver.on('user.message', function(data) { Log.debug('User message', JSON.stringify(data.message)); });
     },
 
 

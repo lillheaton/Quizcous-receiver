@@ -133,6 +133,7 @@ define([
 
     // @Public
     send: function(user, message) {
+      if (typeof message === 'object') message = JSON.stringify(message);
       this.messageBus.send(user.id, message);
     },
     broadcast: function(message) {
@@ -195,10 +196,16 @@ define([
 
       var user = this.getUserById(event.senderId);
 
-      this.trigger('user.message', {
-        user: user,
-        message: event.data
-      });
+      if (user) {
+        var message = event.data;
+
+        user.onMessage(message);
+
+        this.trigger('user.message', {
+          user: user,
+          message: message
+        });
+      }
     }
 
 
