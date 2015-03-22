@@ -2,10 +2,30 @@
 // Sets up configuration for requirejs
 require.config({
   paths: {
+    'events': '../submodules/events/src/events',
+    'classy': '../submodules/classy.js/src/classy',
+
     'jquery': '../bower_components/jquery/dist/jquery',
     'underscore': '../bower_components/underscore/underscore',
-    'events': '../submodules/events/src/events',
-    'classy': '../submodules/classy.js/src/classy'
+
+    'react': '../bower_components/react/react-with-addons',
+    'JSXTransformer': '../bower_components/react/JSXTransformer',
+    'jsx': '../bower_components/requirejs-react-jsx/jsx',
+    'text': '../bower_components/requirejs-text/text'
+  },
+
+  shim: {
+    'react': {
+      exports: 'React'
+    },
+    'JSXTransformer': 'JSXTransformer'
+  },
+
+  'jsx': {
+    fileExtenstion: '.jsx',
+    transformOptions: {
+      harmony: true
+    }
   }
 });
 

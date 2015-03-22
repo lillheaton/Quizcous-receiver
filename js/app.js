@@ -33,7 +33,7 @@ define([
 
       this.setScreen(this.screens.lobby);
 
-      this.receiver.start();
+      // this.receiver.start();
     },
 
     init: function() {
@@ -64,7 +64,7 @@ define([
       }
 
       this.activeScreen = screen;
-      this.activeScreen.draw(this.$el);
+      this.activeScreen.draw(this.$el.get(0));
       this.activeScreen.show();
     },
 

@@ -35,8 +35,12 @@ define([
     },
 
     update: function(time) { },
-    draw: function($container) {
-      $container.html(this.$el);
+    draw: function(container) {
+      this.containerElem = container;
+    },
+
+    baseRender: function(reactView, data) {
+      this.reactElement = React.render(reactView, data);
     }
 
   });
