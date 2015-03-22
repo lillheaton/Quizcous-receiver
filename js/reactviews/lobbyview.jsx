@@ -1,14 +1,43 @@
 define([
-  'react',
-
-  'jsx!reactviews/lobbyuserview'
+  'react'
 ], function(
-  React,
-
-  LobbyUserView
+  React
 ) {
 
-  return React.createClass({
+  var LobbyUserView = React.createClass({
+
+    render: function() {
+
+      var createUser = function(user) {
+        if (!user.data.color || !user.data.name) return null;
+
+        var containerClasses = "user " + (user.data.lobbyReady ? 'ready' : '');
+
+        return (
+
+          <div key={user.id} className={containerClasses} data-id={user.id}>
+          
+            <div className="color" style={{ background: user.data.color }}>
+              <div className="checkmark"></div>
+            </div>
+
+            <div className="name">{user.data.name}</div>
+          </div>
+
+        );
+      };
+
+      return (
+        <section>
+          {this.props.users.map(createUser)}
+        </section>
+      );
+    }
+
+  });
+
+
+  var LobbyView = React.createClass({
     checkHasRenderedUsers: function() {
       var $domNode = $(this.getDOMNode());
       $domNode.toggleClass('lobby', !!$domNode.find('.user').length);
@@ -39,5 +68,8 @@ define([
       );
     }
   });
+
+
+  return LobbyView;
 
 });

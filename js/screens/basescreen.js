@@ -1,5 +1,7 @@
 define([
   'underscore',
+  'react',
+
   'events',
   'classy',
 
@@ -8,6 +10,8 @@ define([
   'receiver'
 ], function(
   _,
+  React,
+
   Events,
   Classy,
 
@@ -40,7 +44,7 @@ define([
     },
 
     baseRender: function(reactView, data) {
-      this.reactElement = React.render(reactView, data);
+      this.reactComponent = React.render(React.createElement(reactView, data), this.containerElem);
     }
 
   });
