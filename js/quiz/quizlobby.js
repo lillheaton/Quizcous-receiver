@@ -23,6 +23,7 @@ define([
       this.quiz = quiz;
 
       this.initEvents();
+      this.quiz.setupQuestions();
     },
 
     initEvents: function() {

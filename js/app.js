@@ -8,7 +8,8 @@ define([
   'receiver',
 
   'screens/loadingscreen',
-  'screens/lobbyscreen'
+  'screens/lobbyscreen',
+  'screens/gamescreen'
 ], function(
   _,
   Events,
@@ -19,7 +20,8 @@ define([
   Receiver,
 
   LoadingScreen,
-  LobbyScreen
+  LobbyScreen,
+  GameScreen
 ) {
 
   var App = Classy.extend({
@@ -31,7 +33,8 @@ define([
     __init__: function() {
       this.init();
 
-      this.setScreen(this.screens.lobby);
+      //this.setScreen(this.screens.lobby);
+      this.setScreen(this.screens.game);
 
       this.receiver.start();
     },
@@ -47,6 +50,7 @@ define([
     initScreens: function() {
       this.screens.lobby = new LobbyScreen(this);
       this.screens.loading = new LoadingScreen(this);
+      this.screens.game = new GameScreen(this);
     },
 
     initReceiver: function() {
