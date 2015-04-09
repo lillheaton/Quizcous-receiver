@@ -6,9 +6,7 @@ define([
 
   'util/log',
 
-  'quiz/quiz',
   'quiz/quizlobby',
-
   'screens/basescreen'
 ], function(
   _,
@@ -18,16 +16,14 @@ define([
 
   Log,
 
-  Quiz,
   QuizLobby,
-
   BaseScreen
 ) {
 
   var containerTemplate = _.template((function() {/*
       <div class="lobby-container">
         <section class="upper">
-          <h1 class="big-title">Quizcous <span>Let the game begin!</span></h1>
+          <h1 class="big-title"></h1>
         </section>
 
         <section class="lower"></section>
@@ -36,7 +32,6 @@ define([
  
   var GameScreen = BaseScreen.extend({
 
-    quiz: null,
     quizLobby: null,
 
     // @constructor
@@ -47,8 +42,7 @@ define([
 
     init: function() {
       this.initEvents();
-      this.quiz = new Quiz(this.app.receiver);
-      this.quizLobby = new QuizLobby(this.quiz);
+      this.quizLobby = new QuizLobby(this.app);
     },
 
     initEvents: function() {

@@ -26,27 +26,7 @@ define([
     questions: [],
 
     // @constructor
-    __init__: function(receiver) {
-      this.receiver = receiver;
-    },
-
-    setupQuestions: function(){
-      var that = this;
-      this.questions = [];
-
-      // Get how many questions there is in db
-      this._request("count").done(function(countData){
-        that.totalQuestionsCount = countData.count;
-
-        // Request 20 questions and save which id:s
-        _.each(that._getUniqueIds(20), function(id) {
-          that.usedIds.push(id);
-
-          that._request("/get/" + id).done(function(quizData){
-            questions.push(quizData);
-          });
-        });
-      });
+    __init__: function() {      
     },
 
     _getUniqueIds: function(amount) {
@@ -70,17 +50,43 @@ define([
       });
     },
 
-    _request: function(path){
+    _request: function(path, callback){
       return $.ajax({
               url: this.url + path,
               type: 'GET',
               data: {
                 format: 'application/json'
               },
-              dataType: 'json'        
+              dataType: 'json',
+              success: callback 
             });
-    }
+    },
 
+    setupQuestions: function(){
+      var that = this;
+      this.questions = [];
+
+      // Get how many questions there is in db
+      this._request("count").done(function(countData){
+        that.totalQuestionsCount = countData.count;
+
+        var tasks = [];
+
+        // Request 20 questions and save which id:s
+        _.each(that._getUniqueIds(20), function(id) {
+          that.usedIds.push(id);
+
+          tasks.push(that._request("/get/" + id, function(quizData){
+            that.questions.push(quizData);
+          }));
+        });
+
+        // When all the requests is done trigger event
+        $.when.apply(null, tasks).done(function(){
+          that.trigger('quiz.fetchedQuestions', that.questions);
+        });
+      });
+    }
   });
 
   // add event interface to Quiz
